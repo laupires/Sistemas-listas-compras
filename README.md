@@ -7,16 +7,10 @@ Este trabalho tem como proposta o desenvolvimento de um **Sistema de Lista de Co
 O trabalho tem como tema o desenvolvimento de um **Sistema de Lista de Compras**. A proposta é criar uma aplicação web para ajudar na organização da lista de compras domésticas, permitindo que o usuário registre os produtos que precisa comprar de forma prática.
 
 ## 2. Escopo
-Esse projeto terá as seguintes funcionalidades : 
--cadastrar itens na lista de compras;
--alterar a quantidade de cada produto;
--editar produtos da lista;
--visualizar itens cadastrados em um só lugar.
+Esse projeto terá as seguintes funcionalidades : cadastrar itens na lista de compras, alterar a quantidade de cada produto, editar produtos da lista, visualizar itens cadastrados em um só lugar.
 
 ## 3. Restrições 
-Neste trabalho não serão considerados funcionalidades mais avançadas, como :
--comparação de preços;
--compartilhamento da lista com demais pessoas da casa.
+Neste trabalho não serão considerados funcionalidades mais avançadas, como : comparação de preços e compartilhamento da lista com demais pessoas da casa.
 
 ## 4. Protótipo
 Os protótipos do sistema serão elaboradas para representar as principais telas de aplicação, como a tela inicial, tela de cadastro de itens e a tela de edição de item.
