@@ -43,7 +43,7 @@ O sistema possui uma tela de login e, após o acesso, o usuário consegue visual
 - **Banco de dados:** nesta versão, os dados são armazenados em arquivo JSON, e não em um banco como MySQL ou PostgreSQL.
 - **Compartilhamento da lista:** ainda não é possível compartilhar a lista com outras pessoas da casa.
 
-##$ 4. Outras funcionalidades implementadas
+### 4. Outras funcionalidades implementadas
 
 - mensagem quando não há itens cadastrados;
 - confirmação antes de excluir um item.
