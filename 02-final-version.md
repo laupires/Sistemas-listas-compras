@@ -8,7 +8,7 @@ O trabalho desenvolvido foi um **Sistema de Lista de Compras**, pensado para aju
 
 O sistema possui uma tela de login e, após o acesso, o usuário consegue visualizar a lista de compras e realizar as principais ações: cadastrar, listar, editar, excluir e marcar produtos como comprados. O projeto foi dividido em frontend e backend, utilizando uma API simples para manipular os dados e um arquivo JSON para armazenar os itens cadastrados.
 
-## 1. Tecnologias utilizadas - Backend e Frontend
+### 1. Tecnologias utilizadas - Backend e Frontend
 
 ### Frontend
 
@@ -23,7 +23,7 @@ O sistema possui uma tela de login e, após o acesso, o usuário consegue visual
 - **CORS:** usado para permitir a comunicação entre o frontend e o backend.
 - **JSON:** usado para armazenar os dados dos itens cadastrados, por meio do arquivo `itens.json`.
 
-## 2. Funcionalidades implementadas
+### 2. Funcionalidades implementadas
 
 - **Login:** tela inicial onde o usuário informa e-mail e senha para acessar o sistema.
 - **Logout:** botão para sair do sistema e retornar para a tela de login.
@@ -36,25 +36,25 @@ O sistema possui uma tela de login e, após o acesso, o usuário consegue visual
 - **Persistência dos dados:** os itens são salvos no arquivo `itens.json`.
 - **CRUD de itens:** foram implementadas as operações de criar, listar, atualizar e excluir produtos, usando as rotas `GET`, `POST`, `PUT` e `DELETE`.
 
-## 3. Funcionalidades previstas e não implementadas
+### 3. Funcionalidades previstas e não implementadas
 
 - **Autenticação:** não foi implementada validação real de senha nem criptografia.
 - **Recuperação de senha:** a opção “Esqueci minha senha” apenas exibe uma mensagem informativa.
 - **Banco de dados:** nesta versão, os dados são armazenados em arquivo JSON, e não em um banco como MySQL ou PostgreSQL.
 - **Compartilhamento da lista:** ainda não é possível compartilhar a lista com outras pessoas da casa.
 
-## 4. Outras funcionalidades implementadas
+##$ 4. Outras funcionalidades implementadas
 
 - mensagem quando não há itens cadastrados;
 - confirmação antes de excluir um item.
 
-## 5. Principais desafios e dificuldades
+### 5. Principais desafios e dificuldades
 
 As principais dificuldades foram separar o projeto em frontend e backend e fazer a comunicação entre eles.
 
 Também foi necessário controlar a exibição das telas, para que a lista de compras aparecesse somente depois do login.
 
-## 6. Instruções para instalação e execução
+### 6. Instruções para instalação e execução
 
 1. Certifique-se de ter o Node.js instalado em sua máquina.
 2. Baixe ou clone o repositório do  projeto e abra a pasta no Visual Studio Code.
@@ -68,6 +68,6 @@ Também foi necessário controlar a exibição das telas, para que a lista de co
 
 **Observação:** o backend precisa permanecer em execução enquanto o sistema estiver sendo utilizado.
 
-## 7. Referências
+### 7. Referências
 
 Foram utilizados os materiais da disciplina de Sistemas Web I e documentações de apoio das tecnologias utilizadas no projeto, como HTML, CSS, JavaScript, Node.js e Express.
