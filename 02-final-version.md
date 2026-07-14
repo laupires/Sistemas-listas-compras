@@ -2,7 +2,7 @@
 
 ## Discente: Laura Andrade Pires
 
-## Resumo
+### Resumo
 
 O trabalho desenvolvido foi um **Sistema de Lista de Compras**, pensado para ajudar na organização das compras de casa. A ideia é permitir que o usuário cadastre os produtos que precisa comprar, informe a quantidade, escolha uma categoria e acompanhe quais itens já foram comprados.
 
