@@ -1,0 +1,305 @@
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  font-family: Arial, Helvetica, sans-serif;
+  background: linear-gradient(135deg, #f4f4f4, #e9ecef);
+  color: #333;
+}
+
+.escondido {
+  display: none !important;
+}
+
+.login-page {
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.login-card {
+  width: 90%;
+  max-width: 420px;
+  background-color: #ffffff;
+  padding: 35px;
+  border-radius: 16px;
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.12);
+  text-align: center;
+  border-top: 5px solid #b71c1c;
+}
+
+.login-icon {
+  font-size: 48px;
+  margin-bottom: 10px;
+}
+
+.login-card h1 {
+  color: #b71c1c;
+  margin-bottom: 8px;
+}
+
+.login-card p {
+  color: #666;
+  margin-bottom: 25px;
+}
+
+.app-page {
+  width: 90%;
+  max-width: 1000px;
+  margin: 30px auto;
+}
+
+.topo {
+  background-color: #ffffff;
+  padding: 25px;
+  border-radius: 16px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 15px;
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.1);
+  margin-bottom: 25px;
+  border-left: 6px solid #b71c1c;
+}
+
+.titulo-area {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+}
+
+.cart-icon {
+  width: 70px;
+  height: 70px;
+  background-color: #f1f1f1;
+  color: #b71c1c;
+  border-radius: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 38px;
+  border: 2px solid #d6d6d6;
+}
+
+.topo h1 {
+  color: #b71c1c;
+  margin: 0;
+}
+
+.topo p {
+  margin: 5px 0 0;
+  color: #666;
+}
+
+.conteudo {
+  display: grid;
+  grid-template-columns: 1fr 1.4fr;
+  gap: 25px;
+}
+
+.card {
+  background-color: #ffffff;
+  padding: 25px;
+  border-radius: 16px;
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.1);
+}
+
+.card h2 {
+  margin-top: 0;
+  color: #b71c1c;
+  border-bottom: 1px solid #e0e0e0;
+  padding-bottom: 10px;
+}
+
+form {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+label {
+  text-align: left;
+  font-weight: bold;
+  color: #444;
+}
+
+input,
+select {
+  padding: 12px;
+  border-radius: 8px;
+  border: 1px solid #cfcfcf;
+  outline: none;
+  font-size: 15px;
+  background-color: #fafafa;
+}
+
+input:focus,
+select:focus {
+  border-color: #b71c1c;
+  background-color: #ffffff;
+}
+
+button {
+  padding: 12px;
+  border: none;
+  border-radius: 8px;
+  background-color: #b71c1c;
+  color: white;
+  font-size: 15px;
+  cursor: pointer;
+  transition: 0.2s;
+}
+
+button:hover {
+  background-color: #8e1515;
+}
+
+.esqueci-senha {
+  display: block;
+  text-align: right;
+  font-size: 14px;
+  color: #b71c1c;
+  text-decoration: none;
+  margin-top: -4px;
+  margin-bottom: 8px;
+}
+
+.esqueci-senha:hover {
+  text-decoration: underline;
+}
+
+.btn-sair {
+  background-color: #eeeeee;
+  color: #333;
+  min-width: 90px;
+  border: 1px solid #cccccc;
+}
+
+.btn-sair:hover {
+  background-color: #dddddd;
+}
+
+.lista-topo {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.lista-topo span {
+  background-color: #eeeeee;
+  color: #b71c1c;
+  padding: 6px 12px;
+  border-radius: 20px;
+  font-size: 14px;
+  border: 1px solid #d0d0d0;
+}
+
+ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.item {
+  background-color: #f8f8f8;
+  border: 1px solid #dddddd;
+  padding: 15px;
+  border-radius: 12px;
+  margin-bottom: 12px;
+  border-left: 5px solid #b71c1c;
+}
+
+.item.comprado {
+  opacity: 0.65;
+  border-left-color: #555;
+}
+
+.item.comprado .nome-produto {
+  text-decoration: line-through;
+}
+
+.item-info {
+  margin-bottom: 12px;
+}
+
+.nome-produto {
+  font-size: 18px;
+  font-weight: bold;
+  color: #222;
+}
+
+.detalhes {
+  color: #666;
+  font-size: 14px;
+  margin-top: 4px;
+}
+
+.categoria {
+  display: inline-block;
+  margin-top: 8px;
+  background-color: #e9ecef;
+  color: #333;
+  padding: 5px 10px;
+  border-radius: 15px;
+  font-size: 13px;
+  border: 1px solid #d0d0d0;
+}
+
+.acoes {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.acoes button {
+  padding: 8px 10px;
+  font-size: 14px;
+}
+
+.btn-comprado {
+  background-color: #555555;
+}
+
+.btn-comprado:hover {
+  background-color: #3f3f3f;
+}
+
+.btn-editar {
+  background-color: #757575;
+}
+
+.btn-editar:hover {
+  background-color: #5f5f5f;
+}
+
+.btn-excluir {
+  background-color: #c62828;
+}
+
+.btn-excluir:hover {
+  background-color: #a51f1f;
+}
+
+.mensagem-vazia {
+  text-align: center;
+  color: #777;
+  padding: 20px;
+}
+
+@media (max-width: 750px) {
+  .conteudo {
+    grid-template-columns: 1fr;
+  }
+
+  .topo {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .btn-sair {
+    width: 100%;
+  }
+}

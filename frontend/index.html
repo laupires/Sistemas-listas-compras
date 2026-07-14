@@ -1,0 +1,103 @@
+<!doctype html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Sistema de Lista de Compras</title>
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <section id="loginPage" class="login-page">
+      <div class="login-card">
+        <div class="login-icon">🛒</div>
+
+        <h1>Lista de Compras</h1>
+        <p>Organize sua lista de compras de forma simples e prática.</p>
+
+        <form id="loginForm">
+          <label for="email">E-mail</label>
+          <input
+            type="email"
+            id="email"
+            placeholder="Digite seu e-mail"
+            required
+          />
+
+          <label for="senha">Senha</label>
+          <input
+            type="password"
+            id="senha"
+            placeholder="Digite sua senha"
+            required
+          />
+
+          <a href="#" class="esqueci-senha" id="esqueciSenha"
+            >Esqueci minha senha</a
+          >
+
+          <button type="submit">Entrar</button>
+        </form>
+      </div>
+    </section>
+
+    <main id="appPage" class="app-page escondido">
+      <header class="topo">
+        <div class="titulo-area">
+          <div class="cart-icon">🛒</div>
+
+          <div>
+            <h1>Sistema de Lista de Compras</h1>
+            <p>Organize seus produtos e acompanhe o que já foi comprado.</p>
+          </div>
+        </div>
+
+        <button id="btnSair" class="btn-sair">Sair</button>
+      </header>
+
+      <section class="conteudo">
+        <section class="card formulario-card">
+          <h2>Cadastrar item</h2>
+
+          <form id="formItem">
+            <input type="hidden" id="itemId" />
+
+            <label for="produto">Produto</label>
+            <input type="text" id="produto" placeholder="Ex: Arroz" required />
+
+            <label for="quantidade">Quantidade</label>
+            <input
+              type="number"
+              id="quantidade"
+              min="1"
+              placeholder="Ex: 2"
+              required
+            />
+
+            <label for="categoria">Categoria</label>
+            <select id="categoria" required>
+              <option value="">Selecione uma categoria</option>
+              <option value="Alimentos">Alimentos</option>
+              <option value="Limpeza">Limpeza</option>
+              <option value="Higiene">Higiene</option>
+              <option value="Bebidas">Bebidas</option>
+              <option value="Outros">Outros</option>
+            </select>
+
+            <button type="submit" id="btnSalvar">Adicionar item</button>
+          </form>
+        </section>
+
+        <section class="card lista-card">
+          <div class="lista-topo">
+            <h2>Minha lista</h2>
+            <span id="totalItens">0 itens</span>
+          </div>
+
+          <ul id="listaCompras"></ul>
+        </section>
+      </section>
+    </main>
+
+    <script src="script.js"></script>
+  </body>
+</html>
