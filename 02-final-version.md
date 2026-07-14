@@ -23,8 +23,6 @@ O sistema possui uma tela de login e, após o acesso, o usuário consegue visual
 - **CORS:** usado para permitir a comunicação entre o frontend e o backend.
 - **JSON:** usado para armazenar os dados dos itens cadastrados, por meio do arquivo `itens.json`.
 
-O backend ficou responsável por receber as requisições do frontend e realizar as operações de cadastro, listagem, atualização e exclusão dos itens da lista de compras.
-
 ## 2. Funcionalidades implementadas
 
 - **Login:** tela inicial onde o usuário informa e-mail e senha para acessar o sistema.
