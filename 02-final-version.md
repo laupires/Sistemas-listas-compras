@@ -27,6 +27,8 @@ O sistema possui uma tela de login e, após o acesso, o usuário consegue visual
 
 - **Login:** tela inicial onde o usuário informa e-mail e senha para acessar o sistema.
 - **Logout:** botão para sair do sistema e retornar para a tela de login.
+- **Cadastro de usuário:** permite que o usuário crie uma conta informando nome, e-mail e senha.
+- **Identificação do usuário logado:** exibe na tela principal o nome e o e-mail do usuário que está utilizando o sistema.
 - **Cadastro de itens:** permite adicionar produtos à lista de compras.
 - **Listagem de itens:** exibe os produtos cadastrados com nome, quantidade e categoria.
 - **Edição de itens:** permite alterar as informações de um produto já cadastrado.
@@ -47,6 +49,7 @@ O sistema possui uma tela de login e, após o acesso, o usuário consegue visual
 
 - mensagem quando não há itens cadastrados;
 - confirmação antes de excluir um item.
+- usuário cria uma conta informando nome, e-mail e senha.
 
 ### 5. Principais desafios e dificuldades
 
