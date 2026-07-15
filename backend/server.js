@@ -72,6 +72,72 @@ app.post("/login", (req, res) => {
   });
 });
 
+app.put("/usuarios/:email", (req, res) => {
+  const usuarios = lerArquivo(arquivoUsuarios);
+  const emailAtual = req.params.email;
+  const { nome, email, senha } = req.body;
+
+  if (!nome || !email) {
+    return res
+      .status(400)
+      .json({ mensagem: "Nome e e-mail são obrigatórios." });
+  }
+
+  const usuarioEncontrado = usuarios.find(
+    (usuario) => usuario.email === emailAtual,
+  );
+
+  if (!usuarioEncontrado) {
+    return res.status(404).json({ mensagem: "Usuário não encontrado." });
+  }
+
+  const usuarioExistente = usuarios.find(
+    (usuario) => usuario.email === email && usuario.email !== emailAtual,
+  );
+
+  if (usuarioExistente) {
+    return res
+      .status(400)
+      .json({ mensagem: "Este e-mail já está sendo usado." });
+  }
+
+  const usuariosAtualizados = usuarios.map((usuario) => {
+    if (usuario.email === emailAtual) {
+      return {
+        ...usuario,
+        nome,
+        email,
+        senha: senha ? senha : usuario.senha,
+      };
+    }
+
+    return usuario;
+  });
+
+  salvarArquivo(arquivoUsuarios, usuariosAtualizados);
+
+  res.json({
+    mensagem: "Perfil atualizado com sucesso!",
+    usuario: {
+      nome,
+      email,
+    },
+  });
+});
+
+app.delete("/usuarios/:email", (req, res) => {
+  const usuarios = lerArquivo(arquivoUsuarios);
+  const email = req.params.email;
+
+  const usuariosFiltrados = usuarios.filter(
+    (usuario) => usuario.email !== email,
+  );
+
+  salvarArquivo(arquivoUsuarios, usuariosFiltrados);
+
+  res.json({ mensagem: "Conta excluída com sucesso!" });
+});
+
 app.get("/itens", (req, res) => {
   const itens = lerArquivo(arquivoItens);
   res.json(itens);
