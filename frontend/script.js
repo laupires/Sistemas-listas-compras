@@ -1,8 +1,15 @@
 const loginPage = document.getElementById("loginPage");
+const cadastroPage = document.getElementById("cadastroPage");
 const appPage = document.getElementById("appPage");
+
 const loginForm = document.getElementById("loginForm");
+const cadastroForm = document.getElementById("cadastroForm");
+
 const btnSair = document.getElementById("btnSair");
 const esqueciSenha = document.getElementById("esqueciSenha");
+const abrirCadastro = document.getElementById("abrirCadastro");
+const voltarLogin = document.getElementById("voltarLogin");
+const usuarioLogadoInfo = document.getElementById("usuarioLogadoInfo");
 
 const formItem = document.getElementById("formItem");
 const produtoInput = document.getElementById("produto");
@@ -17,23 +24,76 @@ const API_URL = "http://localhost:3000";
 
 let itens = [];
 
+function mostrarLogin() {
+  loginPage.classList.remove("escondido");
+  cadastroPage.classList.add("escondido");
+  appPage.classList.add("escondido");
+}
+
+function mostrarCadastro() {
+  loginPage.classList.add("escondido");
+  cadastroPage.classList.remove("escondido");
+  appPage.classList.add("escondido");
+}
+
+function mostrarApp() {
+  loginPage.classList.add("escondido");
+  cadastroPage.classList.add("escondido");
+  appPage.classList.remove("escondido");
+}
+
 function verificarLogin() {
-  const usuarioLogado = localStorage.getItem("usuarioLogado");
+  const usuarioLogado = JSON.parse(localStorage.getItem("usuarioLogado"));
 
   if (usuarioLogado) {
-    loginPage.classList.add("escondido");
-    appPage.classList.remove("escondido");
+    mostrarApp();
+    usuarioLogadoInfo.textContent = `Usuário: ${usuarioLogado.nome} (${usuarioLogado.email})`;
     carregarItens();
   } else {
-    loginPage.classList.remove("escondido");
-    appPage.classList.add("escondido");
+    mostrarLogin();
   }
 }
+
+abrirCadastro.addEventListener("click", function (event) {
+  event.preventDefault();
+  mostrarCadastro();
+});
+
+voltarLogin.addEventListener("click", function (event) {
+  event.preventDefault();
+  mostrarLogin();
+});
+
+cadastroForm.addEventListener("submit", async function (event) {
+  event.preventDefault();
+
+  const nome = document.getElementById("nomeCadastro").value.trim();
+  const email = document.getElementById("emailCadastro").value.trim();
+  const senha = document.getElementById("senhaCadastro").value;
+
+  const resposta = await fetch(`${API_URL}/cadastro`, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({ nome, email, senha }),
+  });
+
+  const dados = await resposta.json();
+
+  if (resposta.ok) {
+    alert("Cadastro realizado com sucesso!");
+    cadastroForm.reset();
+    mostrarLogin();
+  } else {
+    alert(dados.mensagem);
+  }
+});
 
 loginForm.addEventListener("submit", async function (event) {
   event.preventDefault();
 
-  const email = document.getElementById("email").value;
+  const email = document.getElementById("email").value.trim();
   const senha = document.getElementById("senha").value;
 
   const resposta = await fetch(`${API_URL}/login`, {
@@ -44,18 +104,19 @@ loginForm.addEventListener("submit", async function (event) {
     body: JSON.stringify({ email, senha }),
   });
 
-  if (resposta.ok) {
-    const dados = await resposta.json();
+  const dados = await resposta.json();
 
-    localStorage.setItem("usuarioLogado", dados.usuario);
+  if (resposta.ok) {
+    localStorage.setItem("usuarioLogado", JSON.stringify(dados.usuario));
     verificarLogin();
   } else {
-    alert("Erro ao realizar login.");
+    alert(dados.mensagem);
   }
 });
 
 btnSair.addEventListener("click", function () {
   localStorage.removeItem("usuarioLogado");
+  usuarioLogadoInfo.textContent = "";
   verificarLogin();
 });
 
@@ -204,7 +265,7 @@ function editarItem(id) {
 }
 
 async function excluirItem(id) {
-  const confirmar = confirm("Deseja excluir este item?");
+  const confirmar = confirm("Deseja realmente excluir este item?");
 
   if (confirmar) {
     await fetch(`${API_URL}/itens/${id}`, {
