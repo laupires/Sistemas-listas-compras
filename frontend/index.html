@@ -99,7 +99,12 @@
           </div>
         </div>
 
-        <button id="btnSair" class="btn-sair">Sair</button>
+        <div class="acoes-topo">
+          <button type="button" id="btnPerfil" class="btn-perfil">
+            Meu perfil
+          </button>
+          <button type="button" id="btnSair" class="btn-sair">Sair</button>
+        </div>
       </header>
 
       <section class="conteudo">
@@ -145,6 +150,37 @@
         </section>
       </section>
     </main>
+
+    <div id="perfilModal" class="modal escondido">
+      <div class="modal-card">
+        <h2>Meu perfil</h2>
+        <p>Edite seus dados ou exclua sua conta.</p>
+
+        <form id="perfilForm">
+          <label for="nomePerfil">Nome</label>
+          <input type="text" id="nomePerfil" required />
+
+          <label for="emailPerfil">E-mail</label>
+          <input type="email" id="emailPerfil" required />
+
+          <label for="senhaPerfil">Nova senha</label>
+          <input
+            type="password"
+            id="senhaPerfil"
+            placeholder="Preencha apenas se quiser alterar"
+          />
+
+          <button type="submit">Salvar alterações</button>
+        </form>
+
+        <button type="button" id="btnExcluirConta" class="btn-excluir-conta">
+          Excluir conta
+        </button>
+        <button type="button" id="btnFecharPerfil" class="btn-fechar">
+          Fechar
+        </button>
+      </div>
+    </div>
 
     <script src="script.js"></script>
   </body>
