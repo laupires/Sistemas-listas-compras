@@ -11,6 +11,16 @@ const abrirCadastro = document.getElementById("abrirCadastro");
 const voltarLogin = document.getElementById("voltarLogin");
 const usuarioLogadoInfo = document.getElementById("usuarioLogadoInfo");
 
+const btnPerfil = document.getElementById("btnPerfil");
+const perfilModal = document.getElementById("perfilModal");
+const perfilForm = document.getElementById("perfilForm");
+const btnFecharPerfil = document.getElementById("btnFecharPerfil");
+const btnExcluirConta = document.getElementById("btnExcluirConta");
+
+const nomePerfil = document.getElementById("nomePerfil");
+const emailPerfil = document.getElementById("emailPerfil");
+const senhaPerfil = document.getElementById("senhaPerfil");
+
 const formItem = document.getElementById("formItem");
 const produtoInput = document.getElementById("produto");
 const quantidadeInput = document.getElementById("quantidade");
@@ -28,12 +38,14 @@ function mostrarLogin() {
   loginPage.classList.remove("escondido");
   cadastroPage.classList.add("escondido");
   appPage.classList.add("escondido");
+  perfilModal.classList.add("escondido");
 }
 
 function mostrarCadastro() {
   loginPage.classList.add("escondido");
   cadastroPage.classList.remove("escondido");
   appPage.classList.add("escondido");
+  perfilModal.classList.add("escondido");
 }
 
 function mostrarApp() {
@@ -67,56 +79,67 @@ voltarLogin.addEventListener("click", function (event) {
 cadastroForm.addEventListener("submit", async function (event) {
   event.preventDefault();
 
-  const nome = document.getElementById("nomeCadastro").value.trim();
-  const email = document.getElementById("emailCadastro").value.trim();
-  const senha = document.getElementById("senhaCadastro").value;
+  try {
+    const nome = document.getElementById("nomeCadastro").value.trim();
+    const email = document.getElementById("emailCadastro").value.trim();
+    const senha = document.getElementById("senhaCadastro").value;
 
-  const resposta = await fetch(`${API_URL}/cadastro`, {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-    },
-    body: JSON.stringify({ nome, email, senha }),
-  });
+    const resposta = await fetch(`${API_URL}/cadastro`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ nome, email, senha }),
+    });
 
-  const dados = await resposta.json();
+    const dados = await resposta.json();
 
-  if (resposta.ok) {
-    alert("Cadastro realizado com sucesso!");
-    cadastroForm.reset();
-    mostrarLogin();
-  } else {
-    alert(dados.mensagem);
+    if (resposta.ok) {
+      alert("Cadastro realizado com sucesso!");
+      cadastroForm.reset();
+      mostrarLogin();
+    } else {
+      alert(dados.mensagem);
+    }
+  } catch (erro) {
+    console.error("Erro ao cadastrar usuário:", erro);
+    alert("Erro ao cadastrar. Verifique se o backend está rodando.");
   }
 });
 
 loginForm.addEventListener("submit", async function (event) {
   event.preventDefault();
 
-  const email = document.getElementById("email").value.trim();
-  const senha = document.getElementById("senha").value;
+  try {
+    const email = document.getElementById("email").value.trim();
+    const senha = document.getElementById("senha").value;
 
-  const resposta = await fetch(`${API_URL}/login`, {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-    },
-    body: JSON.stringify({ email, senha }),
-  });
+    const resposta = await fetch(`${API_URL}/login`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ email, senha }),
+    });
 
-  const dados = await resposta.json();
+    const dados = await resposta.json();
 
-  if (resposta.ok) {
-    localStorage.setItem("usuarioLogado", JSON.stringify(dados.usuario));
-    verificarLogin();
-  } else {
-    alert(dados.mensagem);
+    if (resposta.ok) {
+      localStorage.setItem("usuarioLogado", JSON.stringify(dados.usuario));
+      verificarLogin();
+    } else {
+      alert(dados.mensagem);
+    }
+  } catch (erro) {
+    console.error("Erro ao fazer login:", erro);
+    alert("Erro ao fazer login. Verifique se o backend está rodando.");
   }
 });
 
 btnSair.addEventListener("click", function () {
   localStorage.removeItem("usuarioLogado");
   usuarioLogadoInfo.textContent = "";
+  fecharPerfil();
   verificarLogin();
 });
 
@@ -125,10 +148,120 @@ esqueciSenha.addEventListener("click", function (event) {
   alert("Funcionalidade de recuperação de senha ainda não implementada.");
 });
 
+function abrirPerfil() {
+  const usuarioLogado = JSON.parse(localStorage.getItem("usuarioLogado"));
+
+  if (usuarioLogado) {
+    nomePerfil.value = usuarioLogado.nome;
+    emailPerfil.value = usuarioLogado.email;
+    senhaPerfil.value = "";
+    perfilModal.classList.remove("escondido");
+  }
+}
+
+function fecharPerfil() {
+  perfilModal.classList.add("escondido");
+}
+
+btnPerfil.addEventListener("click", abrirPerfil);
+
+btnFecharPerfil.addEventListener("click", fecharPerfil);
+
+perfilForm.addEventListener("submit", async function (event) {
+  event.preventDefault();
+
+  try {
+    const usuarioLogado = JSON.parse(localStorage.getItem("usuarioLogado"));
+
+    if (!usuarioLogado) {
+      alert("Nenhum usuário está logado.");
+      return;
+    }
+
+    const nome = nomePerfil.value.trim();
+    const email = emailPerfil.value.trim();
+    const senha = senhaPerfil.value.trim();
+
+    if (!nome || !email) {
+      alert("Nome e e-mail são obrigatórios.");
+      return;
+    }
+
+    const resposta = await fetch(
+      `${API_URL}/usuarios/${encodeURIComponent(usuarioLogado.email)}`,
+      {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ nome, email, senha }),
+      },
+    );
+
+    const dados = await resposta.json();
+
+    if (resposta.ok) {
+      localStorage.setItem("usuarioLogado", JSON.stringify(dados.usuario));
+      usuarioLogadoInfo.textContent = `Usuário: ${dados.usuario.nome} (${dados.usuario.email})`;
+
+      alert("Perfil atualizado com sucesso!");
+      fecharPerfil();
+    } else {
+      alert(dados.mensagem);
+    }
+  } catch (erro) {
+    console.error("Erro ao salvar perfil:", erro);
+    alert("Erro ao salvar alterações. Verifique se o backend está rodando.");
+  }
+});
+
+btnExcluirConta.addEventListener("click", async function () {
+  const confirmar = confirm("Deseja realmente excluir sua conta?");
+
+  if (!confirmar) {
+    return;
+  }
+
+  try {
+    const usuarioLogado = JSON.parse(localStorage.getItem("usuarioLogado"));
+
+    if (!usuarioLogado) {
+      alert("Nenhum usuário está logado.");
+      return;
+    }
+
+    const resposta = await fetch(
+      `${API_URL}/usuarios/${encodeURIComponent(usuarioLogado.email)}`,
+      {
+        method: "DELETE",
+      },
+    );
+
+    const dados = await resposta.json();
+
+    if (resposta.ok) {
+      alert(dados.mensagem);
+      localStorage.removeItem("usuarioLogado");
+      fecharPerfil();
+      verificarLogin();
+    } else {
+      alert("Erro ao excluir conta.");
+    }
+  } catch (erro) {
+    console.error("Erro ao excluir conta:", erro);
+    alert("Erro ao excluir conta. Verifique se o backend está rodando.");
+  }
+});
+
 async function carregarItens() {
-  const resposta = await fetch(`${API_URL}/itens`);
-  itens = await resposta.json();
-  renderizarLista();
+  try {
+    const resposta = await fetch(`${API_URL}/itens`);
+    itens = await resposta.json();
+    renderizarLista();
+  } catch (erro) {
+    console.error("Erro ao carregar itens:", erro);
+    alert("Erro ao carregar itens. Verifique se o backend está rodando.");
+  }
 }
 
 function limparFormulario() {
@@ -196,61 +329,71 @@ function renderizarLista() {
 formItem.addEventListener("submit", async function (event) {
   event.preventDefault();
 
-  const produto = produtoInput.value.trim();
-  const quantidade = quantidadeInput.value;
-  const categoria = categoriaInput.value;
-  const itemId = itemIdInput.value;
+  try {
+    const produto = produtoInput.value.trim();
+    const quantidade = quantidadeInput.value;
+    const categoria = categoriaInput.value;
+    const itemId = itemIdInput.value;
 
-  if (itemId) {
-    const itemAtual = itens.find((item) => item.id == itemId);
+    if (itemId) {
+      const itemAtual = itens.find((item) => item.id == itemId);
 
-    await fetch(`${API_URL}/itens/${itemId}`, {
+      await fetch(`${API_URL}/itens/${itemId}`, {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          produto,
+          quantidade,
+          categoria,
+          comprado: itemAtual.comprado,
+        }),
+      });
+    } else {
+      await fetch(`${API_URL}/itens`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          produto,
+          quantidade,
+          categoria,
+        }),
+      });
+    }
+
+    limparFormulario();
+    carregarItens();
+  } catch (erro) {
+    console.error("Erro ao salvar item:", erro);
+    alert("Erro ao salvar item. Verifique se o backend está rodando.");
+  }
+});
+
+async function marcarComoComprado(id) {
+  try {
+    const item = itens.find((item) => item.id === id);
+
+    await fetch(`${API_URL}/itens/${id}`, {
       method: "PUT",
       headers: {
         "Content-Type": "application/json",
       },
       body: JSON.stringify({
-        produto,
-        quantidade,
-        categoria,
-        comprado: itemAtual.comprado,
+        produto: item.produto,
+        quantidade: item.quantidade,
+        categoria: item.categoria,
+        comprado: !item.comprado,
       }),
     });
-  } else {
-    await fetch(`${API_URL}/itens`, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        produto,
-        quantidade,
-        categoria,
-      }),
-    });
+
+    carregarItens();
+  } catch (erro) {
+    console.error("Erro ao marcar item:", erro);
+    alert("Erro ao alterar item.");
   }
-
-  limparFormulario();
-  carregarItens();
-});
-
-async function marcarComoComprado(id) {
-  const item = itens.find((item) => item.id === id);
-
-  await fetch(`${API_URL}/itens/${id}`, {
-    method: "PUT",
-    headers: {
-      "Content-Type": "application/json",
-    },
-    body: JSON.stringify({
-      produto: item.produto,
-      quantidade: item.quantidade,
-      categoria: item.categoria,
-      comprado: !item.comprado,
-    }),
-  });
-
-  carregarItens();
 }
 
 function editarItem(id) {
@@ -268,11 +411,16 @@ async function excluirItem(id) {
   const confirmar = confirm("Deseja realmente excluir este item?");
 
   if (confirmar) {
-    await fetch(`${API_URL}/itens/${id}`, {
-      method: "DELETE",
-    });
+    try {
+      await fetch(`${API_URL}/itens/${id}`, {
+        method: "DELETE",
+      });
 
-    carregarItens();
+      carregarItens();
+    } catch (erro) {
+      console.error("Erro ao excluir item:", erro);
+      alert("Erro ao excluir item.");
+    }
   }
 }
 
